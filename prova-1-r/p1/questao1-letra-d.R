@@ -1,6 +1,3 @@
-install.packages("ggplot2")
-install.packages("gridExtra")
-
 # Carregar o pacote ggplot2
 library(ggplot2)
 
@@ -9,12 +6,13 @@ wines <- read.table('http://www.archive.ics.uci.edu/ml/machine-learning-database
 plots = list()
 
 for(col_name in colnames(wines)[-1]) {
-  plots[[col_name]] = plot_density_class(wines %>% select(Type, all_of(col_name)), 'Type', 
+  plots[[col_name]] = plot_boxplot_class(wines %>% select(Type, all_of(col_name)), 'Type', 
                       label_x = paste(col_name, 'by wine Type'), 
-                      colors = c('#0099e5', '#ff4c4c', '#34bf49'), 
-                      alpha = .7)
+                      colors = c('#0099e5', '#ff4c4c', '#34bf49'))
+  
 }
 
-density_plot_grouped = grid.arrange(grobs = plots, ncol = 5)
+boxplot_grouped = grid.arrange(grobs = plots, ncol = 5)
 
 rm(plots)
+

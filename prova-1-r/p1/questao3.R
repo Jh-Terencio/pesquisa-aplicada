@@ -3,10 +3,7 @@ library(tidyr)
 library(cluster)
 
 # Lendo os dados
-wines <- read.table('http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data',
-                    sep = ',', col.names = c('Type', 'Alcohol', 'Malic', 'Ash', 'Alcalinity', 
-                                             'Magnesium', 'Phenols', 'Flavanoids', 'Nonflavanoids', 
-                                             'Proanthocyanins', 'Color', 'Hue', 'Dilution', 'Proline'))
+wines <- read.table('http://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data', sep = ',', col.names = c('Type', 'Alcohol', 'Malic', 'Ash', 'Alcalinity', 'Magnesium', 'Phenols', 'Flavanoids', 'Nonflavanoids', 'Proanthocyanins', 'Color', 'Hue', 'Dilution', 'Proline'))
 
 # Ajustando o modelo de K-means
 modelo <- cluster_kmeans(k = 3)

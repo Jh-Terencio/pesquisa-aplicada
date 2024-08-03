@@ -19,3 +19,16 @@ Na análise de agrupamento, o objetivo é identificar e explorar padrões de sim
 - **Critério de Partição**: Definir se a partição é rígida (um objeto pertence exclusivamente a um grupo) ou suave (um objeto pode pertencer a múltiplos grupos com diferentes graus de pertença).
 - **Separação dos Agrupamentos**: Avaliar a exclusividade dos objetos em relação aos grupos (se um objeto é atribuído a um grupo, ele deve ser exclusivamente desse grupo).
 - **Medida de Similaridade**: Escolher entre métodos baseados em distância (como a distância euclidiana) ou em conexão de dados (como a similaridade de Jaccard).
+
+### 2.2 - Similaridade e Dissimilaridade
+
+- **Similaridade**: É um valor numérico que avalia o quão próximos dois objetos são. Geralmente, utilizamos um valor de 0 para indicar pouca semelhança e 1 para indicar alta semelhança. O desafio está em definir precisamente o que representam os valores 0 e 1 no contexto específico.
+
+- **Dissimilaridade**: Refere-se à distância entre as observações, medida por uma definição geral. Alguns métodos comuns para calcular a dissimilaridade incluem:
+  - **Distância Euclidiana**: A medida padrão de distância entre dois pontos em um espaço euclidiano.
+  - **Distância de Minkowski**: Uma generalização da distância euclidiana e da distância de Manhattan, que pode ser ajustada com um parâmetro para diferentes tipos de espaço.
+  - **Distância de Cosseno**: Mede a diferença entre dois vetores com base no ângulo entre eles, frequentemente usada em análises de texto e outros dados vetoriais.
+
+## 3 - Métodos de cluster
+
+### 3.1 K-means

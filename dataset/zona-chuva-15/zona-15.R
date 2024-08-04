@@ -3,24 +3,35 @@ library(ggplot2)
 library(dbscan)
 library(fpc)
 library(factoextra)
+library(lubridate)
 
-list_rainfallzones <- split(data, data$RAINFALLZONE)
+# Criando coluna de Shift (1-down ,2-Morning, 3-afternoon, 4-night)
+data$GPSTIMESTAMP <- as.POSIXct(data$GPSTIMESTAMP, format = "%Y-%m-%d %H:%M:%S")
+
+data$Shift <- with(data, ifelse(hour(GPSTIMESTAMP) >= 0 & hour(GPSTIMESTAMP) < 6, 1,
+                                ifelse(hour(GPSTIMESTAMP) >= 6 & hour(GPSTIMESTAMP) < 12, 2,
+                                       ifelse(hour(GPSTIMESTAMP) >= 12 & hour(GPSTIMESTAMP) < 18, 3, 4))))
+
+data$Velocidade_km <- data$VELOCITY * 3.6
 
 # Lista com todas as zonas de chuva
+list_rainfallzones <- split(data, data$RAINFALLZONE)
+
+#Pegando a Zona 15
 data_zone_15 <- list_rainfallzones[["15"]]
 
-# Separadano uma parcela dos dados (15%)
-sampled_data <- data_zone_15[sample(nrow(data_zone_15), size = nrow(data_zone_15) * 0.15),]
+
+# Separadano uma parcela dos dados
+sampled_data <- data_zone_15[sample(nrow(data_zone_15), size = nrow(data_zone_15) * 0.2),]
 
 # Selecionando colunas relevantes
-coordinates <- sampled_data[, c("LATITUDE", "LONGITUDE", "VELOCITY", "RAINFALLVOLUME")]
+coordinates <- sampled_data[, c("LATITUDE", "LONGITUDE", "Velocidade_km", "RAINFALLVOLUME", "Shift")]
 
 # Removendo colunas NaN
 coordinates <- na.omit(coordinates)
 
 # Normalizando os dados
 coordinates_scaled <- scale(coordinates)
-
 
 # Executar DBSCAN
 # eps é a distância máxima entre dois pontos para serem considerados vizinhos
@@ -39,10 +50,14 @@ ggplot(coordinates, aes(x = LONGITUDE, y = LATITUDE, color = as.factor(cluster))
        color = "Cluster") +
   theme_minimal()
 
-
-
 # Possíveis outliers
-outliers <- coordinates[coordinates$cluster != 1, ]
+outliers <- coordinates[coordinates$cluster == 0, ]
+
+# Calcular a média da coluna 'RAINFALLVOLUME' para os outliers
+media_velocidade <- mean(coordinates$Velocidade_km, na.rm = TRUE)
+
+# Exibir a média calculada
+media_velocidade
 
 if (nrow(outliers) > 0) {
   # Plotar outliers
@@ -61,6 +76,13 @@ if (nrow(outliers) > 0) {
 
 # Plotando somente o clusters 1
 coordinates_1 <- coordinates[coordinates$cluster == 1, ]
+
+# Calcular a média da coluna 'RAINFALLVOLUME' para os outliers
+media_velocidade_1 <- mean(coordinates_1$Velocidade_km, na.rm = TRUE)
+
+# Exibir a média calculada
+media_velocidade_1
+
 
 # Visualizar os clusters
 ggplot(coordinates_1, aes(x = LONGITUDE, y = LATITUDE, color = as.factor(cluster))) +

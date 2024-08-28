@@ -1,5 +1,9 @@
 # Campo Grande
 
+| ID Região | Nome da Região | Bairros                                                        |
+|-----------|----------------|----------------------------------------------------------------|
+| 18        | CAMPO GRANDE    | Santíssimo, Senador Vasconcelos, Cosmos, Inhoaíba, Campo Grande|
+
 ### Local
 - **Rota**: Rua Olinda Ellis → Av. Cesário de Melo → Rua Aurélio de Figueiredo → Rua Ferreira Borges → Praça Dr. Raul Boaventura
 - **Tamanho do trecho**: 1,7km

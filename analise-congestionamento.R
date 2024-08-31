@@ -144,7 +144,7 @@ ggplot() +
   
   # Personalização dos rótulos e títulos
   labs(
-    title = "Clusters pelo Rio de Janeiro",
+    title = "Clusters pela Ilha do Governador",
     x = "Longitude",
     y = "Latitude",
     color = "Cluster"
@@ -178,7 +178,7 @@ ggplot() +
   
   # Personalização dos rótulos e títulos
   labs(
-    title = "Clusters pelo Rio de Janeiro",
+    title = "Clusters por Campo Grande",
     x = "Longitude",
     y = "Latitude",
     color = "Cluster"
@@ -212,7 +212,7 @@ ggplot() +
   
   # Personalização dos rótulos e títulos
   labs(
-    title = "Clusters pelo Rio de Janeiro",
+    title = "Clusters pelo Centro",
     x = "Longitude",
     y = "Latitude",
     color = "Cluster"
@@ -248,7 +248,7 @@ ggplot() +
   
   # Personalização dos rótulos e títulos
   labs(
-    title = "Clusters pelo Rio de Janeiro",
+    title = "Clusters pela Penha",
     x = "Longitude",
     y = "Latitude",
     color = "Cluster"
@@ -265,6 +265,68 @@ ggplot() +
     legend.position = "right"  # Manter a legenda para os clusters
   )
 
+# Lagoa
 
+lagoa <- data[data$ADMINISTRATIVEREGION == 6,]
 
+lagoa <- lagoa[!is.na(lagoa$LATITUDE) & !is.na(lagoa$LONGITUDE), ]
 
+onibus_lagoa <- onibus_congestionados[onibus_congestionados$ADMINISTRATIVEREGION == 6,]
+
+ggplot() +
+  # Primeira camada de lagoa em cinza
+  geom_point(data = lagoa, aes(x = LONGITUDE, y = LATITUDE), color = "gray", alpha = 0.5) +
+  
+  # Segunda camada com os clusters
+  geom_point(data = onibus_lagoa, aes(x = LONGITUDE, y = LATITUDE, color = as.factor(clusters)), alpha = 0.5) +
+  
+  # Personalização dos rótulos e títulos
+  labs(
+    title = "Clusters pela Lagoa",
+    x = "Longitude",
+    y = "Latitude",
+    color = "Cluster"
+  ) +
+  
+  # Tema minimalista
+  theme_minimal() +
+  
+  # Ajustes adicionais de estilo
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.position = "right"  # Manter a legenda para os clusters
+  )
+
+# Jardim Botânico
+
+jardim_botanico <- jardim_botanico[!is.na(jardim_botanico$LATITUDE) & !is.na(jardim_botanico$LONGITUDE), ]
+
+onibus_jardim_botanico <- onibus_congestionados[onibus_congestionados$NEIGHBORHOOD == "028",]
+
+ggplot() +
+  # Primeira camada de jardim botanico em cinza
+  geom_point(data = jardim_botanico, aes(x = LONGITUDE, y = LATITUDE), color = "gray", alpha = 0.5) +
+  
+  # Segunda camada com os clusters
+  geom_point(data = onibus_jardim_botanico, aes(x = LONGITUDE, y = LATITUDE, color = as.factor(clusters)), alpha = 0.5) +
+  
+  # Personalização dos rótulos e títulos
+  labs(
+    title = "Clusters pelo Jardim Botânico",
+    x = "Longitude",
+    y = "Latitude",
+    color = "Cluster"
+  ) +
+  
+  # Tema minimalista
+  theme_minimal() +
+  
+  # Ajustes adicionais de estilo
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.position = "right"  # Manter a legenda para os clusters
+  )
